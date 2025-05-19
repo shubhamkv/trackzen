@@ -21,12 +21,21 @@ export const activitySchema = z.object({
   endTime: z
     .string()
     .refine((val) => !isNaN(Date.parse(val)), { message: "Invalid end time" }),
-  isIdle: z.boolean(),
-  wasActiveTab: z.boolean(),
   duration: z.number().int().nonnegative(),
-  sessionId: z.string().optional(),
+  sessionId: z.string().cuid().optional(),
 });
 
 export const paramsSchema = z.object({
   sessionId: z.string().cuid(),
+});
+
+export const createSessionSchema = z.object({
+  startTime: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "Invalid start time",
+  }),
+  endTime: z
+    .string()
+    .refine((val) => !isNaN(Date.parse(val)), { message: "Invalid end time" }),
+  totalTabs: z.number().int().min(0),
+  activities: z.array(activitySchema),
 });
