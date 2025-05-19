@@ -20,17 +20,8 @@ export const createActivity = async (
     return;
   }
 
-  const {
-    url,
-    domain,
-    title,
-    startTime,
-    endTime,
-    isIdle,
-    wasActiveTab,
-    duration,
-    sessionId,
-  } = result.data;
+  const { url, domain, title, startTime, endTime, duration, sessionId } =
+    result.data;
 
   try {
     const activity = await prisma.websiteActivity.create({
@@ -40,8 +31,6 @@ export const createActivity = async (
         title,
         startTime: new Date(startTime),
         endTime: new Date(endTime),
-        isIdle,
-        wasActiveTab,
         duration,
         sessionId,
         userId: req.user.id,
