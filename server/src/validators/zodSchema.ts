@@ -22,7 +22,7 @@ export const activitySchema = z.object({
     .string()
     .refine((val) => !isNaN(Date.parse(val)), { message: "Invalid end time" }),
   duration: z.number().int().nonnegative(),
-  sessionId: z.string().cuid().optional(),
+  sessionId: z.string().cuid(),
 });
 
 export const paramsSchema = z.object({
@@ -30,12 +30,17 @@ export const paramsSchema = z.object({
 });
 
 export const createSessionSchema = z.object({
-  startTime: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: "Invalid start time",
-  }),
+  startTime: z
+    .string()
+    .refine((val) => !isNaN(Date.parse(val)), {
+      message: "Invalid start time",
+    })
+    .optional(),
   endTime: z
     .string()
-    .refine((val) => !isNaN(Date.parse(val)), { message: "Invalid end time" }),
+    .refine((val) => !isNaN(Date.parse(val)), { message: "Invalid end time" })
+    .optional(),
   totalTabs: z.number().int().min(0),
-  activities: z.array(activitySchema),
+  sessionId: z.string().cuid().optional(),
+  // activities: z.array(activitySchema),
 });
