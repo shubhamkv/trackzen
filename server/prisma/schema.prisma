@@ -28,15 +28,13 @@ model WebsiteActivity {
   id            String        @id @default(cuid())
   userId        String
   user          User          @relation(fields: [userId], references: [id])
-  sessionId     String?
-  session       Session?      @relation(fields: [sessionId], references: [id])
+  sessionId     String
+  session       Session      @relation(fields: [sessionId], references: [id])
   url           String
   domain        String
   title         String
   startTime     DateTime
   endTime       DateTime
-  isIdle        Boolean       @default(false)
-  wasActiveTab  Boolean       @default(false)
   duration      Int
   createdAt     DateTime      @default(now())
 }
@@ -47,6 +45,8 @@ model Session {
   user        User                @relation(fields: [userId], references: [id])
   startTime   DateTime
   endTime     DateTime?
+  duration    Int                 @default(0)    
+  totalTabs   Int
   activities  WebsiteActivity[]
   createdAt   DateTime            @default(now())
 }
