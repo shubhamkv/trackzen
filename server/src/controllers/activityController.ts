@@ -65,6 +65,9 @@ export const getActivitiesByUser = async (
       where: {
         userId: req.user.id,
       },
+      include: {
+        session: true,
+      },
       orderBy: {
         createdAt: "desc",
       },
