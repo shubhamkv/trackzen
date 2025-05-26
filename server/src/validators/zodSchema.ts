@@ -42,5 +42,5 @@ export const createSessionSchema = z.object({
     .optional(),
   totalTabs: z.number().int().min(0),
   sessionId: z.string().cuid().optional(),
-  // activities: z.array(activitySchema),
+  duration: z.number().int().nonnegative().optional(),
 });
