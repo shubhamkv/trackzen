@@ -102,6 +102,9 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     res.status(200).json({
       msg: "Login successfully",
       token: token,
+      name: user.name,
+      username: user.username,
+      createdAt: user.createdAt,
     });
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : "unknown error";
