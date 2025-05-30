@@ -6,12 +6,14 @@ import activityRouter from "./routes/activityRoutes";
 import sessionRouter from "./routes/sessionRoutes";
 import dashboardRouter from "./routes/dashboardRoutes";
 import { connectDB } from "./config/db";
+import { connectRedis } from "./config/redisDB";
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 connectDB();
+connectRedis();
 
 app.use(cors());
 app.use(express.json());
