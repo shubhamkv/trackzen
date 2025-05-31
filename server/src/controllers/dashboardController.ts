@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { subHours } from "date-fns";
 import { prisma } from "../config/db";
+import { redisClient } from "../config/redisDB";
 
 const formatDuration = (minutes: number) => {
   const hours = Math.floor(minutes / 60);
@@ -32,7 +33,7 @@ export const getDailyStats = async (req: Request, res: Response) => {
     });
 
     if (!activities || activities.length === 0) {
-      res.status(404).json({
+      res.status(200).json({
         msg: "No activities found!!",
       });
       return;
@@ -122,7 +123,7 @@ export const getWeeklyStats = async (req: Request, res: Response) => {
     });
 
     if (!activities || activities.length === 0) {
-      res.status(404).json({
+      res.status(200).json({
         msg: "No activities found!!",
       });
       return;
@@ -212,7 +213,7 @@ export const getMonthlyStats = async (req: Request, res: Response) => {
     });
 
     if (!activities || activities.length === 0) {
-      res.status(404).json({
+      res.status(200).json({
         msg: "No activities found!!",
       });
       return;
@@ -276,6 +277,55 @@ export const getMonthlyStats = async (req: Request, res: Response) => {
     console.error("Error fetching daily stats", error);
     res.status(500).json({
       error: "Internal server error",
+    });
+  }
+};
+
+export const postExtensionState = async (req: Request, res: Response) => {
+  if (!req.user) {
+    res.status(401).json({ msg: "User not authenticated" });
+    return;
+  }
+
+  const userId = req.user.id;
+  const { newState } = req.body;
+
+  try {
+    const dbres = await redisClient.set(
+      `extensionState:${userId}`,
+      String(newState)
+    );
+    if (dbres)
+      res.status(200).json({
+        msg: `Extention ${newState ? "enabled" : "disabled"}`,
+      });
+  } catch (error) {
+    console.error("Error msg:", error);
+    res.status(500).json({
+      msg: "Internal server error",
+    });
+  }
+};
+
+export const getExtensionState = async (req: Request, res: Response) => {
+  if (!req.user) {
+    res.status(401).json({ msg: "User not authenticated" });
+    return;
+  }
+
+  const userId = req.user.id;
+
+  try {
+    const dbres = await redisClient.get(`extensionState:${userId}`);
+    if (dbres)
+      res.status(200).json({
+        msg: `Extention state fetched successfully`,
+        extensionState: dbres === "true",
+      });
+  } catch (error) {
+    console.error("Error msg:", error);
+    res.status(500).json({
+      msg: "Internal server error",
     });
   }
 };
