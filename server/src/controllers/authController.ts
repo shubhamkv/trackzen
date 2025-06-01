@@ -46,13 +46,19 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       },
     });
 
+    const token = jwt.sign({ userId: newUser.id }, JWT_SECRET, {
+      expiresIn: "5d",
+    });
+
     if (newUser) {
       res.status(201).json({
         msg: "User registered successfully",
+        token: token,
         user: {
           id: newUser.id,
           name: newUser.name,
           username: newUser.username,
+          createdAt: newUser.createdAt,
         },
       });
     }
@@ -102,9 +108,12 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     res.status(200).json({
       msg: "Login successfully",
       token: token,
-      name: user.name,
-      username: user.username,
-      createdAt: user.createdAt,
+      user: {
+        id: user.id,
+        name: user.name,
+        username: user.username,
+        createdAt: user.createdAt,
+      },
     });
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : "unknown error";
