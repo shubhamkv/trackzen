@@ -26,7 +26,6 @@ app.use(
   })
 );
 app.use(express.json());
-app.options("*", cors());
 
 app.use("/api/auth", authRouter);
 app.use("/api/activities", activityRouter);
