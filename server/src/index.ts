@@ -15,8 +15,18 @@ const PORT = process.env.PORT || 3000;
 connectDB();
 connectRedis();
 
-app.use(cors());
+const allowedOrigins = ["https://trackzen.netlify.app"];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(express.json());
+app.options("*", cors());
 
 app.use("/api/auth", authRouter);
 app.use("/api/activities", activityRouter);
