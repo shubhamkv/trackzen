@@ -4,12 +4,11 @@
   "description": "Track time spent on internet and improve productivity.",
   "version": "1.0.0",
   "icons": {
-    "16": "icons/TrackZen-16.png",
-    "48": "icons/TrackZen-48.png",
-    "128": "icons/TrackZen-128.png"
+    "16": "icons/trackzen-logo-16.png",
+    "48": "icons/trackzen-logo-48.png",
+    "128": "icons/trackzen-logo-128.png"
   },
-  "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
-  "host_permissions": ["<all_urls>"],
+  "permissions": ["tabs", "storage", "idle"],
   "background": {
     "service_worker": "background.js",
     "type": "module"
@@ -18,9 +17,9 @@
     "default_popup": "popup.html",
     "default_title": "TrackZen",
     "default_icon": {
-      "16": "icons/TrackZen-16.png",
-      "48": "icons/TrackZen-48.png",
-      "128": "icons/TrackZen-128.png"
+      "16": "icons/trackzen-logo-16.png",
+      "48": "icons/trackzen-logo-48.png",
+      "128": "icons/trackzen-logo-128.png"
     }
   }
 }

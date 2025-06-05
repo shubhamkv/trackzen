@@ -1,6 +1,6 @@
 import { axiosInstance } from "@/utils/axiosInstance";
 
-const IDLE_THRESHOLD_MINUTES = 5;
+const IDLE_THRESHOLD_MINUTES = 180;
 const SYNC_INTERVAL_MINUTES = 5;
 
 type WebsiteActivity = {
@@ -438,11 +438,6 @@ setInterval(async () => {
 
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   if (msg.type === "ENABLE_TRACKING") {
-    if (isTrackingEnabled === msg.payload) {
-      sendResponse({ status: "no change" }); // No change in tracking state, do nothing
-      return;
-    }
-
     isTrackingEnabled = msg.payload;
     chrome.storage.local.set({ trackzen_enabled: msg.payload });
 
