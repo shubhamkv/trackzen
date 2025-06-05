@@ -15,7 +15,10 @@ const PORT = process.env.PORT || 3000;
 connectDB();
 connectRedis();
 
-const allowedOrigins = ["https://trackzen.netlify.app"];
+const allowedOrigins = [
+  "https://trackzen.netlify.app",
+  "chrome-extension://ihmdphjegdihepnabhaoaaeaoaphofog",
+];
 
 app.use(
   cors({
