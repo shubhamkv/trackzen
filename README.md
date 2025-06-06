@@ -24,5 +24,5 @@
 
 ---
 
-> 🚀 *Boost your productivity by understanding your digital habits with TrackZen.*
+> 🚀 **Boost your productivity by understanding your digital habits with TrackZen.**
 
