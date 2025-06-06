@@ -1,4 +1,4 @@
-# 🧭 TrackZen – Website Activity Tracker for Productivity
+# 🧭 TrackZen – Website Activity Tracker
 
 **TrackZen** is a full-stack productivity application powered by a custom-built Chrome Extension that monitors website activity, session duration, tab count, total time, top site and many more. It delivers actionable insights through a beautifully designed dashboard, helping users optimize their focus and eliminate distractions.
 
